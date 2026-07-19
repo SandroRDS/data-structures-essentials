@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from "vitest";
-import { Stack } from "../src/classes";
+import { Stack } from "../classes";
 import { faker } from "@faker-js/faker";
 import _ from "lodash";
 
