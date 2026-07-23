@@ -145,7 +145,25 @@ class LinkedList<T> {
     return this.getNodeAt(index)?.value;
   }
 
-  public getIterator() {}
+  public getIterator() {
+    let currentNode = this.head;
+
+    return {
+      next() {
+        const result = {
+          done: !currentNode,
+          value: currentNode?.value,
+        };
+
+        currentNode = currentNode?.next;
+
+        return result;
+      },
+      [Symbol.iterator]: function () {
+        return this;
+      },
+    };
+  }
 
   public isEmpty() {
     return this.size() === 0;

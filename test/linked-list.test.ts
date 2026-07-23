@@ -267,3 +267,66 @@ describe("Testing to remove elements in the Linked List", () => {
     expect(linkedList.getElementAt(1)).toBe("second");
   });
 });
+
+describe("Testing to clear the Linked List", () => {
+  test("Clearing list with one element", () => {
+    linkedList.enqueue("First");
+    linkedList.clear();
+
+    expect(linkedList.size()).toBe(0);
+    expect(linkedList.isEmpty()).toBe(true);
+  });
+
+  test("Clearing list with multiple elements", () => {
+    linkedList.enqueue("First");
+    linkedList.enqueue("Second");
+    linkedList.enqueue("Third");
+    linkedList.clear();
+
+    expect(linkedList.size()).toBe(0);
+    expect(linkedList.isEmpty()).toBe(true);
+  });
+});
+
+describe("Testing to use the Linked List iterator", () => {
+  test("Iterating an empty list", () => {
+    let loops = 0;
+
+    const iterator = linkedList.getIterator();
+    for (const _ of iterator) loops++;
+
+    expect(loops).toBe(0);
+  });
+
+  test("Iterating a list with one element", () => {
+    linkedList.push("first");
+
+    let loops = 0;
+    const iterator = linkedList.getIterator();
+
+    for (const el of iterator) {
+      expect(linkedList.getElementAt(loops)).toBe(el);
+      loops++;
+    }
+
+    expect(loops).toBe(1);
+  });
+
+  test("Iterating a list with multiple element", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+    linkedList.push("third");
+    linkedList.push("fourth");
+    linkedList.push("fifth");
+
+    let loops = 0;
+    const iterator = linkedList.getIterator();
+
+    for (const el of iterator) {
+      expect(linkedList.getElementAt(loops)).toBe(el);
+      loops++;
+    }
+
+    expect(loops).toBe(5);
+  });
+});
