@@ -27,18 +27,50 @@ class LinkedList<T> {
     this.length++;
   }
 
-  public unshift(element: T) {
-    if (this.isEmpty()) this.push(element);
+  public enqueue(element: T) {
+    if (this.isEmpty()) {
+      this.push(element);
+      return;
+    }
 
     const node = new Node<T>(element);
 
     [this.head!.previous, node.next] = [node, this.head];
     this.head = node;
+
+    this.length++;
   }
 
-  public insert(element: T, index: number) {}
+  public insert(element: T, index: number) {
+    if (index < 0 || index > this.size())
+      throw new RangeError("Índice não permitido.");
 
-  public getElementAt(index: number) {
+    if (index === 0) {
+      this.enqueue(element);
+      return;
+    }
+
+    if (index === this.size()) {
+      this.push(element);
+      return;
+    }
+
+    const node = new Node<T>(element);
+    const oldNode = this.getNodeAt(index)!;
+
+    [node.previous, node.next] = [oldNode.previous, oldNode];
+    [oldNode.previous!.next, oldNode.previous] = [node, node];
+
+    this.length++;
+  }
+
+  public pop() {}
+
+  public dequeue() {}
+
+  public removeAt(index: number) {}
+
+  private getNodeAt(index: number) {
     if (this.isEmpty() || index < 0 || index >= this.length) return;
 
     const startFromTail = Math.ceil(this.length / 2) <= index;
@@ -49,14 +81,17 @@ class LinkedList<T> {
       startFromTail ? i > index : i < index;
       startFromTail ? i-- : i++
     ) {
-      if (startFromTail) console.log(currentNode);
       currentNode = startFromTail ? currentNode?.previous : currentNode?.next;
     }
 
-    return currentNode?.value;
+    return currentNode;
   }
 
-  public removeAt(index: number) {}
+  public getElementAt(index: number) {
+    return this.getNodeAt(index)?.value;
+  }
+
+  public getIterator() {}
 
   public isEmpty() {
     return this.size() === 0;
@@ -64,6 +99,12 @@ class LinkedList<T> {
 
   public size() {
     return this.length;
+  }
+
+  public clear() {
+    this.head = undefined;
+    this.tail = undefined;
+    this.length = 0;
   }
 }
 
