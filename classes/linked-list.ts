@@ -64,11 +64,65 @@ class LinkedList<T> {
     this.length++;
   }
 
-  public pop() {}
+  public pop() {
+    if (this.isEmpty()) return;
 
-  public dequeue() {}
+    const elementToRemove = this.tail?.value;
 
-  public removeAt(index: number) {}
+    if (this.size() === 1) {
+      this.clear();
+      return elementToRemove;
+    }
+
+    [this.tail!.previous!.next, this.tail] = [undefined, this.tail?.previous];
+
+    this.length--;
+
+    return elementToRemove;
+  }
+
+  public dequeue() {
+    if (this.isEmpty()) return;
+
+    const elementToRemove = this.head?.value;
+
+    if (this.size() === 1) {
+      this.clear();
+      return elementToRemove;
+    }
+
+    [this.head!.next!.previous, this.head] = [undefined, this.head?.next];
+
+    this.length--;
+
+    return elementToRemove;
+  }
+
+  public removeAt(index: number) {
+    if (index < 0 || index > this.size() - 1)
+      throw new RangeError("Índice não permitido.");
+
+    const nodeToRemove = this.getNodeAt(index);
+
+    if (index === 0) {
+      this.dequeue();
+      return nodeToRemove?.value;
+    }
+
+    if (index === this.size() - 1) {
+      this.pop();
+      return nodeToRemove?.value;
+    }
+
+    [nodeToRemove!.previous!.next, nodeToRemove!.next!.previous] = [
+      nodeToRemove?.next,
+      nodeToRemove?.previous,
+    ];
+
+    this.length--;
+
+    return nodeToRemove?.value;
+  }
 
   private getNodeAt(index: number) {
     if (this.isEmpty() || index < 0 || index >= this.length) return;

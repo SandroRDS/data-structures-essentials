@@ -135,3 +135,135 @@ describe("Testing to insert elements in the Linked List", () => {
     expect(linkedList.getElementAt(1)).toBe("second");
   });
 });
+
+describe("Testing to pop elements in the Linked List", () => {
+  test("Popping in an empty list", () => {
+    expect(linkedList.pop()).toBe(undefined);
+    expect(linkedList.size()).toBe(0);
+    expect(linkedList.isEmpty()).toBe(true);
+  });
+
+  test("Popping in a list with one element", () => {
+    linkedList.push("first");
+
+    expect(linkedList.pop()).toBe("first");
+    expect(linkedList.size()).toBe(0);
+    expect(linkedList.isEmpty()).toBe(true);
+  });
+
+  test("Popping in a list with multiple elements", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+    linkedList.push("third");
+    linkedList.push("fourth");
+
+    expect(linkedList.pop()).toBe("fourth");
+    expect(linkedList.pop()).toBe("third");
+    expect(linkedList.size()).toBe(2);
+    expect(linkedList.isEmpty()).toBe(false);
+  });
+});
+
+describe("Testing to dequeue elements in the Linked List", () => {
+  test("Dequeuing in an empty list", () => {
+    expect(linkedList.dequeue()).toBe(undefined);
+    expect(linkedList.size()).toBe(0);
+    expect(linkedList.isEmpty()).toBe(true);
+  });
+
+  test("Dequeuing in a list with one element", () => {
+    linkedList.push("first");
+
+    expect(linkedList.dequeue()).toBe("first");
+    expect(linkedList.size()).toBe(0);
+    expect(linkedList.isEmpty()).toBe(true);
+  });
+
+  test("Dequeuing in a list with multiple elements", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+    linkedList.push("third");
+    linkedList.push("fourth");
+
+    expect(linkedList.dequeue()).toBe("first");
+    expect(linkedList.dequeue()).toBe("second");
+    expect(linkedList.size()).toBe(2);
+    expect(linkedList.isEmpty()).toBe(false);
+  });
+});
+
+describe("Testing to remove elements in the Linked List", () => {
+  test("Removing one element in the start of a filled list", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+    linkedList.push("third");
+
+    linkedList.removeAt(0);
+
+    expect(linkedList.size()).toBe(2);
+    expect(linkedList.getElementAt(0)).toBe("second");
+    expect(linkedList.getElementAt(1)).toBe("third");
+  });
+
+  test("Removing one element in the end of a filled list", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+    linkedList.push("third");
+
+    linkedList.removeAt(2);
+
+    expect(linkedList.size()).toBe(2);
+    expect(linkedList.getElementAt(0)).toBe("first");
+    expect(linkedList.getElementAt(1)).toBe("second");
+  });
+
+  test("Removing one element in the middle of a filled list", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+    linkedList.push("third");
+
+    linkedList.removeAt(1);
+
+    expect(linkedList.size()).toBe(2);
+    expect(linkedList.getElementAt(0)).toBe("first");
+    expect(linkedList.getElementAt(1)).toBe("third");
+  });
+
+  test("Removing multiple elements in the middle of a filled list", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+    linkedList.push("third");
+    linkedList.push("fourth");
+    linkedList.push("fifth");
+    linkedList.push("sixth");
+
+    linkedList.removeAt(1);
+    linkedList.removeAt(2);
+    linkedList.removeAt(1);
+
+    expect(linkedList.size()).toBe(3);
+    expect(linkedList.getElementAt(0)).toBe("first");
+    expect(linkedList.getElementAt(1)).toBe("fifth");
+    expect(linkedList.getElementAt(2)).toBe("sixth");
+  });
+
+  test("Trying to remove a element in a position less the zero", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+
+    expect(() => linkedList.removeAt(-1)).toThrow(RangeError);
+    expect(linkedList.size()).toBe(2);
+    expect(linkedList.getElementAt(0)).toBe("first");
+    expect(linkedList.getElementAt(1)).toBe("second");
+  });
+
+  test("Trying to remove a position greather then the last position", () => {
+    linkedList.push("first");
+    linkedList.push("second");
+
+    expect(() => linkedList.removeAt(2)).toThrow(RangeError);
+    expect(linkedList.size()).toBe(2);
+    expect(linkedList.getElementAt(0)).toBe("first");
+    expect(linkedList.getElementAt(1)).toBe("second");
+  });
+});
